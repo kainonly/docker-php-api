@@ -1,0 +1,20 @@
+{
+  "name": "kain/docker-php-api",
+  "description": "",
+  "require": {
+  },
+  "require-dev": {
+  },
+  "autoload": {
+    "psr-4": {
+      "think\\bit\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "kain",
+      "email": "zhangtqx@vip.qq.com"
+    }
+  ],
+  "license": "MIT"
+}
