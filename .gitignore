@@ -7,3 +7,4 @@ vendor/
 # PHPUnit
 phpunit.phar
 phpunit.xml
+.phpunit.result.cache

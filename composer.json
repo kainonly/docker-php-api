@@ -2,7 +2,8 @@
   "name": "kain/docker-php-api",
   "description": "",
   "require": {
-    "guzzlehttp/psr7": "^1.6"
+    "ext-json": "*",
+    "guzzlehttp/guzzle": "^6.5"
   },
   "autoload": {
     "psr-4": {
@@ -10,6 +11,7 @@
     }
   },
   "require-dev": {
+    "roave/security-advisories": "dev-master",
     "phpunit/phpunit": "^8.5"
   },
   "autoload-dev": {
