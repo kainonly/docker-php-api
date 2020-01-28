@@ -28,4 +28,17 @@ class BaseTest extends TestCase
         $result = $this->client->version();
         $this->assertNotEmpty($result);
     }
+
+    public function testPing()
+    {
+        $result = $this->client->ping();
+        $this->assertNotEmpty($result);
+        $this->assertEquals($result, 'OK');
+    }
+
+    public function testDf()
+    {
+        $result = $this->client->df();
+        $this->assertNotEmpty($result);
+    }
 }
