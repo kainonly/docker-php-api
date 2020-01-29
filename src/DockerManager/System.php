@@ -7,26 +7,26 @@ class System extends Common
 {
     /**
      * Check auth configuration
+     * @param string $serveraddress
      * @param string $username
      * @param string $password
-     * @param string $serveraddress
      * @param string|null $email
      * @return array
      */
     public function auth(
+        string $serveraddress,
         string $username,
         string $password,
-        ?string $email,
-        string $serveraddress
+        string $email = null
     ): array
     {
         $body = [];
+        $body['serveraddress'] = $serveraddress;
         $body['username'] = $username;
         $body['password'] = $password;
-        if ($email !== null) {
+        if (!empty($email)) {
             $body['email'] = $email;
         }
-        $body['serveraddress'] = $serveraddress;
         return $this
             ->send('POST', 'auth', null, $body)
             ->toJson();
@@ -71,7 +71,7 @@ class System extends Common
      * @param array $filters
      * @return array
      */
-    public function event(
+    public function events(
         string $since = null,
         string $until = null,
         array $filters = []
