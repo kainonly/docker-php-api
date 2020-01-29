@@ -13,32 +13,32 @@ class BaseTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->client = new DockerClient('dell:2375');
+        $this->client = DockerClient::create('127.0.0.1:2375');
     }
 
     public function testInfo()
     {
-        $result = $this->client->info();
+        $result = $this->client->system->info();
         $this->assertNotEmpty($result);
         $this->assertNotEmpty($result['ID']);
     }
 
     public function testVersion()
     {
-        $result = $this->client->version();
+        $result = $this->client->system->version();
         $this->assertNotEmpty($result);
     }
 
     public function testPing()
     {
-        $result = $this->client->ping();
+        $result = $this->client->system->ping();
         $this->assertNotEmpty($result);
         $this->assertEquals($result, 'OK');
     }
 
     public function testDf()
     {
-        $result = $this->client->df();
+        $result = $this->client->system->df();
         $this->assertNotEmpty($result);
     }
 }
