@@ -26,11 +26,41 @@ class Containers extends Common
             ->toJson();
     }
 
-    public function create(string $name, array $options): array
+    public function create(
+        string $name,
+        string $image,
+        array $ports = [],
+        array $volumes = [],
+        array $env = [],
+        array $cmd = [],
+        array $options = []
+    ): array
     {
         $query = [];
-        $requestQuery['name'] = $name;
-        $body = [];
+        $query['name'] = $name;
+        $body = array_merge([
+            'AttachStdin' => false,
+            'AttachStdout' => true,
+            'AttachStderr' => true,
+            'Tty' => false,
+            'OpenStdin' => false,
+            'StdinOnce' => false,
+            'StopSignal' => 'SIGTERM',
+            'StopTimeout' => 10
+        ], $options);
+        $body['Image'] = $image;
+        if (!empty($ports)) {
+            $body['ExposedPorts'] = $ports;
+        }
+        if (!empty($volumes)) {
+            $body[' Volumes'] = $volumes;
+        }
+        if (!empty($env)) {
+            $body['Env'] = $env;
+        }
+        if (!empty($cmd)) {
+            $body['Cmd'] = $cmd;
+        }
         return $this
             ->send('POST', 'containers/create', $query, $body)
             ->toJson();

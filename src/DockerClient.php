@@ -3,12 +3,14 @@ declare(strict_types=1);
 
 namespace Docker\Api;
 
+use Docker\Api\DockerManager\Containers;
 use Docker\Api\DockerManager\System;
 use GuzzleHttp\Client;
 
 class DockerClient
 {
     public System $system;
+    public Containers $containers;
     private Client $client;
 
     public static function create(string $uri, float $timeout = 2.0): self
@@ -29,5 +31,6 @@ class DockerClient
     private function injections()
     {
         $this->system = new System($this->client);
+        $this->containers = new Containers($this->client);
     }
 }
