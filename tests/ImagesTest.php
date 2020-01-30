@@ -8,6 +8,6 @@ class ImagesTest extends BaseTest
     public function testList()
     {
         $result = $this->client->images->list();
-        $this->assertNotEmpty($result);
+        $this->assertNotNull($result);
     }
 }
