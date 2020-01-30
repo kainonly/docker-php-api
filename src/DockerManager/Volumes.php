@@ -5,9 +5,7 @@ namespace Docker\Api\DockerManager;
 
 class Volumes extends Common
 {
-    public function list(
-        array $filters = []
-    ): array
+    public function list(array $filters = []): array
     {
         $query = [];
         if (!empty($filters)) {
@@ -18,10 +16,7 @@ class Volumes extends Common
             ->toArray();
     }
 
-    public function create(
-        string $name,
-        array $options = []
-    ): array
+    public function create(string $name, array $options = []): array
     {
         $body = array_merge([
             'Driver' => 'local'
@@ -32,4 +27,30 @@ class Volumes extends Common
             ->toArray();
     }
 
+    public function inspect(string $name): array
+    {
+        return $this
+            ->send('GET', 'volumes/' . $name)
+            ->toArray();
+    }
+
+    public function remove(string $name, bool $force = false): array
+    {
+        $query = [];
+        $query['force'] = $force;
+        return $this
+            ->send('DELETE', 'volumes/' . $name, $query)
+            ->toArray();
+    }
+
+    public function prune(array $filters = []): array
+    {
+        $query = [];
+        if (!empty($filters)) {
+            $query['filters'] = $this->strings($filters);
+        }
+        return $this
+            ->send('POST', 'volumes/prune', $query)
+            ->toArray();
+    }
 }
