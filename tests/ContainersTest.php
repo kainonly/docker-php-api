@@ -8,6 +8,6 @@ class ContainersTest extends BaseTest
     public function testList()
     {
         $result = $this->client->containers->list();
-        $this->assertNotEmpty($result);
+        $this->assertNotNull($result);
     }
 }

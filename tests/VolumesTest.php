@@ -8,7 +8,6 @@ class VolumesTest extends BaseTest
     public function testList()
     {
         $result = $this->client->volumes->list();
-        var_dump($result);
-        $this->assertNotEmpty($result);
+        $this->assertNotNull($result);
     }
 }

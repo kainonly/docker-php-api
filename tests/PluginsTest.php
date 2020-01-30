@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace DockerApiTest;
 
-class ImagesTest extends BaseTest
+class PluginsTest extends BaseTest
 {
     public function testList()
     {
-        $result = $this->client->images->list();
+        $result = $this->client->plugins->list();
         $this->assertNotNull($result);
     }
 }

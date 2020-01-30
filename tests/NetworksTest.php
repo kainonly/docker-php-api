@@ -8,7 +8,6 @@ class NetworksTest extends BaseTest
     public function testList()
     {
         $result = $this->client->networks->list();
-        var_dump($result);
-        $this->assertNotEmpty($result);
+        $this->assertNotNull($result);
     }
 }
