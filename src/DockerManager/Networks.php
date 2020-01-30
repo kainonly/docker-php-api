@@ -15,7 +15,7 @@ class Networks extends Common
         }
         return $this
             ->send('GET', 'networks', $query)
-            ->toJson();
+            ->toArray();
     }
 
 }

@@ -15,6 +15,6 @@ class Plugins extends Common
         }
         return $this
             ->send('GET', 'plugins', $query)
-            ->toJson();
+            ->toArray();
     }
 }

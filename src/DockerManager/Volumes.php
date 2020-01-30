@@ -15,7 +15,21 @@ class Volumes extends Common
         }
         return $this
             ->send('GET', 'volumes', $query)
-            ->toJson();
+            ->toArray();
+    }
+
+    public function create(
+        string $name,
+        array $options = []
+    ): array
+    {
+        $body = array_merge([
+            'Driver' => 'local'
+        ], $options);
+        $body['Name'] = $name;
+        return $this
+            ->send('POST', 'volumes/create', null, $body)
+            ->toArray();
     }
 
 }

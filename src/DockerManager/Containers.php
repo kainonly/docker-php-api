@@ -23,7 +23,7 @@ class Containers extends Common
         }
         return $this
             ->send('GET', 'containers/json', $query)
-            ->toJson();
+            ->toArray();
     }
 
     public function create(
@@ -63,7 +63,7 @@ class Containers extends Common
         }
         return $this
             ->send('POST', 'containers/create', $query, $body)
-            ->toJson();
+            ->toArray();
     }
 
 }
