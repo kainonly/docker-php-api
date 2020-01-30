@@ -19,7 +19,7 @@ class Response
         return $this->response->getBody()->getContents();
     }
 
-    public function toJson(): array
+    public function toArray(): array
     {
         return json_decode($this->response->getBody()->getContents(), true);
     }

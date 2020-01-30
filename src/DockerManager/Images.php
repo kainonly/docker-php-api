@@ -19,7 +19,7 @@ class Images extends Common
         $query['digests'] = $digests;
         return $this
             ->send('GET', 'images/json', $query)
-            ->toJson();
+            ->toArray();
     }
 
 }

@@ -29,7 +29,7 @@ class System extends Common
         }
         return $this
             ->send('POST', 'auth', null, $body)
-            ->toJson();
+            ->toArray();
     }
 
     /**
@@ -40,7 +40,7 @@ class System extends Common
     {
         return $this
             ->send('GET', 'info')
-            ->toJson();
+            ->toArray();
     }
 
     /**
@@ -50,7 +50,7 @@ class System extends Common
     public function version(): array
     {
         return $this->send('GET', 'version')
-            ->toJson();
+            ->toArray();
     }
 
     /**
@@ -89,7 +89,7 @@ class System extends Common
         }
         return $this
             ->send('GET', 'events', $query)
-            ->toJson();
+            ->toArray();
     }
 
     /**
@@ -100,6 +100,6 @@ class System extends Common
     {
         return $this
             ->send('GET', 'system/df')
-            ->toJson();
+            ->toArray();
     }
 }
