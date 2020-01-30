@@ -16,12 +16,12 @@ class Volumes extends Common
             ->toArray();
     }
 
-    public function create(string $name, array $options = []): array
+    public function create(string $name, string $driver = 'local', array $options = []): array
     {
-        $body = array_merge([
-            'Driver' => 'local'
-        ], $options);
+        $body = [];
         $body['Name'] = $name;
+        $body['Driver'] = $driver;
+        $body = array_merge($body, $options);
         return $this
             ->send('POST', 'volumes/create', null, $body)
             ->toArray();

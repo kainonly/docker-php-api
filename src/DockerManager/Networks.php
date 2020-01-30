@@ -5,9 +5,7 @@ namespace Docker\Api\DockerManager;
 
 class Networks extends Common
 {
-    public function list(
-        array $filters = []
-    ): array
+    public function list(array $filters = []): array
     {
         $query = [];
         if (!empty($filters)) {
@@ -17,5 +15,24 @@ class Networks extends Common
             ->send('GET', 'networks', $query)
             ->toArray();
     }
+
+    public function inspect(string $id, bool $verbose = false): array
+    {
+        $query = [];
+        $query['verbose'] = $verbose;
+        $query['scope'] = 'local';
+        return $this
+            ->send('GET', 'networks/' . $id, $query)
+            ->toArray();
+    }
+
+    public function remove(string $id): array
+    {
+        return $this
+            ->send('DELETE', 'networks/' . $id)
+            ->toArray();
+    }
+
+
 
 }
