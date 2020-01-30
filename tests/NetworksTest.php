@@ -3,11 +3,12 @@ declare(strict_types=1);
 
 namespace DockerApiTest;
 
-class ContainersTest extends BaseTest
+class NetworksTest extends BaseTest
 {
     public function testList()
     {
-        $result = $this->client->containers->list();
+        $result = $this->client->networks->list();
+        var_dump($result);
         $this->assertNotEmpty($result);
     }
 }
