@@ -7,6 +7,7 @@ use Docker\Api\DockerManager\Containers;
 use Docker\Api\DockerManager\Images;
 use Docker\Api\DockerManager\Networks;
 use Docker\Api\DockerManager\System;
+use Docker\Api\DockerManager\Volumes;
 use GuzzleHttp\Client;
 
 class DockerClient
@@ -15,6 +16,7 @@ class DockerClient
     public Images $images;
     public Containers $containers;
     public Networks $networks;
+    public Volumes $volumes;
     private Client $client;
 
     public static function create(string $uri, float $timeout = 2.0): self
@@ -38,5 +40,6 @@ class DockerClient
         $this->images = new Images($this->client);
         $this->containers = new Containers($this->client);
         $this->networks = new Networks($this->client);
+        $this->volumes = new Volumes($this->client);
     }
 }
