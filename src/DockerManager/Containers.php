@@ -5,7 +5,7 @@ namespace Docker\Api\DockerManager;
 
 class Containers extends Common
 {
-    public function lists(
+    public function list(
         bool $all = false,
         int $limit = null,
         bool $size = false,

@@ -5,17 +5,9 @@ namespace DockerApiTest;
 
 class ContainersTest extends BaseTest
 {
-    public function testCreate()
+    public function testList()
     {
-        $result = $this->client->containers->create('alp', 'alpine');
-        var_dump($result);
-        $this->assertNotEmpty($result);
-    }
-
-    public function testLists()
-    {
-        $result = $this->client->containers->lists();
-        var_dump($result);
+        $result = $this->client->containers->list();
         $this->assertNotEmpty($result);
     }
 }
