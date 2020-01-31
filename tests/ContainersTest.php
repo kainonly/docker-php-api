@@ -7,11 +7,12 @@ class ContainersTest extends BaseTest
 {
     public function testList()
     {
-        $result = $this->client->containers->list();
+        $result = $this->client
+            ->containers
+            ->list
+            ->setAll(true)
+            ->setSize(false)
+            ->result();
         $this->assertNotNull($result);
-    }
-
-    public function testCreate()
-    {
     }
 }
