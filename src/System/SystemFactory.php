@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Docker\Api\DockerManager;
+namespace Docker\Api\System;
 
 use Docker\Api\DockerManager;
 
