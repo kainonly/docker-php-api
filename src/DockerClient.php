@@ -14,6 +14,7 @@ use Docker\Api\Volumes\VolumesFactory;
 
 class DockerClient
 {
+    private Client $client;
     public SystemFactory $system;
     public ImagesFactory $images;
     public ContainersFactory $containers;
@@ -21,12 +22,11 @@ class DockerClient
     public VolumesFactory $volumes;
     public ExecFactory $exec;
     public PluginsFactory $plugins;
-    private Client $client;
 
     public static function create(string $uri, float $timeout = 2.0): self
     {
         $client = new self($uri, $timeout);
-        $client->injections();
+        $client->factorys();
         return $client;
     }
 
@@ -38,7 +38,7 @@ class DockerClient
         ]);
     }
 
-    private function injections()
+    private function factorys()
     {
         $this->system = new SystemFactory($this->client);
         $this->images = new ImagesFactory($this->client);

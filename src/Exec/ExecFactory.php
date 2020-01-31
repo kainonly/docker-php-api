@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace Docker\Api\Exec;
 
-use Docker\Api\DockerManager;
+use Docker\Api\Common\Factory;
 
-class ExecFactory extends DockerManager
+class ExecFactory extends Factory
 {
 
 }
