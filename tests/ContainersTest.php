@@ -10,4 +10,8 @@ class ContainersTest extends BaseTest
         $result = $this->client->containers->list();
         $this->assertNotNull($result);
     }
+
+    public function testCreate()
+    {
+    }
 }

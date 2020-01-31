@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Docker\Api\DockerManager;
+namespace Docker\Api;
 
 use Docker\Api\Common\Response;
 use GuzzleHttp\Client;
 use RuntimeException;
 
-abstract class Common
+abstract class DockerManager
 {
     protected Client $client;
 

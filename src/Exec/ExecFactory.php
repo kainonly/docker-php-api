@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace Docker\Api\DockerManager;
 
-class Exec extends Common
+use Docker\Api\DockerManager;
+
+class ExecFactory extends DockerManager
 {
 
 }

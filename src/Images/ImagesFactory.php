@@ -3,18 +3,25 @@ declare(strict_types=1);
 
 namespace Docker\Api\DockerManager;
 
-class Plugins extends Common
+use Docker\Api\DockerManager;
+
+class ImagesFactory extends DockerManager
 {
     public function list(
-        array $filters = []
+        bool $all = false,
+        array $filters = [],
+        bool $digests = false
     ): array
     {
         $query = [];
+        $query['all'] = $all;
         if (!empty($filters)) {
             $query['filters'] = $this->strings($filters);
         }
+        $query['digests'] = $digests;
         return $this
-            ->send('GET', 'plugins', $query)
+            ->send('GET', 'images/json', $query)
             ->toArray();
     }
+
 }

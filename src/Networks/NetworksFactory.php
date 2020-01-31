@@ -3,7 +3,10 @@ declare(strict_types=1);
 
 namespace Docker\Api\DockerManager;
 
-class Networks extends Common
+use Docker\Api\DockerManager;
+use Docker\Api\Networks\CreateParameter;
+
+class NetworksFactory extends DockerManager
 {
     public function list(array $filters = []): array
     {
@@ -33,6 +36,9 @@ class Networks extends Common
             ->toArray();
     }
 
+    public function create(CreateParameter $parameter): array
+    {
 
 
+    }
 }

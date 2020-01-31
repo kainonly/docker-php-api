@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace Docker\Api\DockerManager;
 
-class Containers extends Common
+use Docker\Api\DockerManager;
+
+class ContainersFactory extends DockerManager
 {
     public function list(
         bool $all = false,
