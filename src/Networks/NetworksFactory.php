@@ -1,10 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Docker\Api\DockerManager;
+namespace Docker\Api\Networks;
 
 use Docker\Api\DockerManager;
-use Docker\Api\Networks\CreateParameter;
 
 class NetworksFactory extends DockerManager
 {

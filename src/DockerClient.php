@@ -4,13 +4,13 @@ declare(strict_types=1);
 namespace Docker\Api;
 
 use GuzzleHttp\Client;
-use Docker\Api\DockerManager\ContainersFactory;
-use Docker\Api\DockerManager\ExecFactory;
-use Docker\Api\DockerManager\ImagesFactory;
-use Docker\Api\DockerManager\NetworksFactory;
-use Docker\Api\DockerManager\PluginsFactory;
-use Docker\Api\DockerManager\SystemFactory;
-use Docker\Api\DockerManager\VolumesFactory;
+use Docker\Api\Containers\ContainersFactory;
+use Docker\Api\Exec\ExecFactory;
+use Docker\Api\Images\ImagesFactory;
+use Docker\Api\Networks\NetworksFactory;
+use Docker\Api\Plugins\PluginsFactory;
+use Docker\Api\System\SystemFactory;
+use Docker\Api\Volumes\VolumesFactory;
 
 class DockerClient
 {
