@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace Docker\Api\DockerManager;
 
-class System extends Common
+use Docker\Api\DockerManager;
+
+class SystemFactory extends DockerManager
 {
     /**
      * Check auth configuration

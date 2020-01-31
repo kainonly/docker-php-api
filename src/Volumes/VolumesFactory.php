@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace Docker\Api\DockerManager;
 
-class Volumes extends Common
+use Docker\Api\DockerManager;
+
+class VolumesFactory extends DockerManager
 {
     public function list(array $filters = []): array
     {
