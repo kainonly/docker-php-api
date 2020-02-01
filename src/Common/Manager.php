@@ -34,14 +34,10 @@ abstract class Manager
 
     protected function send(string $method, string $path): Response
     {
-        $response = $this->client->request(
-            $this->method,
-            $this->path,
-            [
-                'query' => $this->getQuery(),
-                'json' => $this->getBody()
-            ]
-        );
+        $response = $this->client->request($method, $path, [
+            'query' => $this->getQuery(),
+            'json' => $this->getBody()
+        ]);
         if (!in_array($response->getStatusCode(), [200, 201, 204])) {
             throw new RuntimeException('Something went wrong.');
         }

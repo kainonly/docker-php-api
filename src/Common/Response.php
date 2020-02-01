@@ -24,4 +24,8 @@ class Response
         return json_decode($this->response->getBody()->getContents(), true);
     }
 
+    public function isOk(): string
+    {
+        return 'ok';
+    }
 }
