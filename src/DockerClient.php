@@ -23,7 +23,7 @@ class DockerClient
     public ExecFactory $exec;
     public PluginsFactory $plugins;
 
-    public static function create(string $uri, float $timeout = 2.0): self
+    public static function create(string $uri, float $timeout = 15.0): self
     {
         $client = new self($uri, $timeout);
         $client->factorys();

@@ -26,6 +26,6 @@ class Response
 
     public function isOk(): string
     {
-        return 'ok';
+        return 'OK';
     }
 }
