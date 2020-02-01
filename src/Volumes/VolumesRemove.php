@@ -25,10 +25,10 @@ class VolumesRemove extends Manager
         return $this;
     }
 
-    public function result(): array
+    public function result(): string
     {
         return $this
             ->send('DELETE', 'volumes/' . $this->name)
-            ->toArray();
+            ->isOk();
     }
 }
