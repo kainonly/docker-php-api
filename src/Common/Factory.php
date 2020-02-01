@@ -10,11 +10,5 @@ abstract class Factory
     public function __construct(Client $client)
     {
         $this->client = $client;
-        $this->factorys();
-    }
-
-    protected function factorys()
-    {
-
     }
 }

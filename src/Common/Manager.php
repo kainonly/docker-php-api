@@ -9,8 +9,6 @@ use RuntimeException;
 abstract class Manager
 {
     protected Client $client;
-    protected string $method;
-    protected string $path;
     protected array $query = [];
     protected array $body = [];
 
@@ -26,15 +24,15 @@ abstract class Manager
 
     protected function getQuery(): array
     {
-        return $this->query;
+        return array_filter($this->query, fn($v) => !empty($v));
     }
 
     protected function getBody(): array
     {
-        return $this->body;
+        return array_filter($this->body, fn($v) => !empty($v));
     }
 
-    protected function send(): Response
+    protected function send(string $method, string $path): Response
     {
         $response = $this->client->request(
             $this->method,
@@ -44,7 +42,7 @@ abstract class Manager
                 'json' => $this->getBody()
             ]
         );
-        if ($response->getStatusCode() !== 200) {
+        if (!in_array($response->getStatusCode(), [200, 201, 204])) {
             throw new RuntimeException('Something went wrong.');
         }
         return new Response($response);
