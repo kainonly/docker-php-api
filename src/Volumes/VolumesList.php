@@ -7,8 +7,6 @@ use Docker\Api\Common\Manager;
 
 class VolumesList extends Manager
 {
-    protected string $method = 'GET';
-    protected string $path = 'volumes';
     protected array $query = [
         'filters' => null
     ];
@@ -19,5 +17,10 @@ class VolumesList extends Manager
         return $this;
     }
 
-
+    public function result(): array
+    {
+        return $this
+            ->send('GET', 'volumes')
+            ->toArray();
+    }
 }

@@ -7,12 +7,13 @@ use Docker\Api\Common\Factory;
 
 class ContainersFactory extends Factory
 {
-    public ContainersList $list;
-    public ContainersCreate $create;
-
-    protected function factorys(): void
+    public function list(): ContainersList
     {
-        $this->list = new ContainersList($this->client);
-        $this->create = new ContainersCreate($this->client);
+        return new ContainersList($this->client);
+    }
+
+    public function create(): ContainersCreate
+    {
+        return new ContainersCreate($this->client);
     }
 }
