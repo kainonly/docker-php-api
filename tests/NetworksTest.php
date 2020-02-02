@@ -7,7 +7,10 @@ class NetworksTest extends BaseTest
 {
     public function testList()
     {
-        $result = $this->client->networks->list();
+        $result = $this->client
+            ->networks
+            ->list()
+            ->result();
         $this->assertNotNull($result);
     }
 }
