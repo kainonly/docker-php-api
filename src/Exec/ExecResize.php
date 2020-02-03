@@ -1,17 +1,17 @@
 <?php
 declare(strict_types=1);
 
-namespace Docker\Api\Networks;
+namespace Docker\Api\Exec;
 
 use Docker\Api\Common\Manager;
 use GuzzleHttp\Client;
 
-class NetworksConnect extends Manager
+class ExecResize extends Manager
 {
     private string $id;
     protected array $body = [
-        'Container' => null,
-        'EndpointConfig' => null
+        'h' => null,
+        'w' => null,
     ];
 
     public function __construct(Client $client, string $id)
@@ -20,22 +20,22 @@ class NetworksConnect extends Manager
         $this->id = $id;
     }
 
-    public function setContainer(string $value): self
+    public function setHight(int $value): self
     {
-        $this->body['Container'] = $value;
+        $this->body['h'] = $value;
         return $this;
     }
 
-    public function setEndpointConfig(array $value): self
+    public function setWidth(int $value): self
     {
-        $this->body['EndpointConfig'] = $value;
+        $this->body['w'] = $value;
         return $this;
     }
 
     public function result(): string
     {
         return $this
-            ->send('POST', 'networks/' . $this->id . '/connect')
+            ->send('POST', 'exec/' . $this->id . '/resize')
             ->isOk();
     }
 }

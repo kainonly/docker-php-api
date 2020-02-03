@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace Docker\Api\Networks;
+namespace Docker\Api\Exec;
 
 use Docker\Api\Common\Manager;
 use GuzzleHttp\Client;
 
-class NetworksRemove extends Manager
+class ExecInspect extends Manager
 {
     private string $id;
 
@@ -16,10 +16,10 @@ class NetworksRemove extends Manager
         $this->id = $id;
     }
 
-    public function result(): string
+    public function result(): array
     {
         return $this
-            ->send('DELETE', 'networks/' . $this->id)
-            ->isOk();
+            ->send('GET', 'exec/' . $this->id . '/json')
+            ->toArray();
     }
 }
