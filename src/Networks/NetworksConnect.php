@@ -17,7 +17,7 @@ class NetworksConnect extends Manager
     public function __construct(Client $client, string $id)
     {
         parent::__construct($client);
-        $this->name = $id;
+        $this->id = $id;
     }
 
     public function setContainer(string $value): self
