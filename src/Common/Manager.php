@@ -12,6 +12,7 @@ abstract class Manager
     protected array $headers = [];
     protected array $query = [];
     protected array $body = [];
+    protected string $content;
 
     public function __construct(Client $client)
     {
@@ -40,11 +41,16 @@ abstract class Manager
 
     protected function send(string $method, string $path): Response
     {
-        $response = $this->client->request($method, $path, [
+        $args = [
             'headers' => $this->getHeaders(),
-            'query' => $this->getQuery(),
-            'json' => $this->getBody()
-        ]);
+            'query' => $this->getQuery()
+        ];
+        if (!empty($this->content)) {
+            $args['body'] = $this->content;
+        } else {
+            $args['json'] = $this->getBody();
+        }
+        $response = $this->client->request($method, $path, $args);
         if (!in_array($response->getStatusCode(), [200, 201, 204])) {
             throw new RuntimeException('Something went wrong.');
         }
