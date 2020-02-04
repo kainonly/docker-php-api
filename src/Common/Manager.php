@@ -9,6 +9,7 @@ use RuntimeException;
 abstract class Manager
 {
     protected Client $client;
+    protected array $headers = [];
     protected array $query = [];
     protected array $body = [];
 
@@ -20,6 +21,11 @@ abstract class Manager
     protected function strings(array $map): string
     {
         return json_encode($map, JSON_THROW_ON_ERROR, 512);
+    }
+
+    protected function getHeaders(): array
+    {
+        return array_filter($this->headers, fn($v) => !empty($v));
     }
 
     protected function getQuery(): array
@@ -35,6 +41,7 @@ abstract class Manager
     protected function send(string $method, string $path): Response
     {
         $response = $this->client->request($method, $path, [
+            'headers' => $this->getHeaders(),
             'query' => $this->getQuery(),
             'json' => $this->getBody()
         ]);
