@@ -7,4 +7,13 @@ use Docker\Api\Common\Factory;
 
 class ImagesFactory extends Factory
 {
+    public function list(): ImagesList
+    {
+        return new ImagesList($this->client);
+    }
+
+    public function build(): ImagesBuild
+    {
+        return new ImagesBuild($this->client);
+    }
 }
