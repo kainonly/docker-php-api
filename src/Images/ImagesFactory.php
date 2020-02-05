@@ -51,4 +51,11 @@ class ImagesFactory extends Factory
     {
         return new ImagesRemove($this->client, $name);
     }
+
+    public function search(): ImagesSearch
+    {
+        return new ImagesSearch($this->client);
+    }
+
+
 }
