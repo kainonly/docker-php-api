@@ -6,13 +6,11 @@ namespace Docker\Api\Images;
 use Docker\Api\Common\Manager;
 use GuzzleHttp\Client;
 
-class ImagesPush extends Manager
+class ImagesTag extends Manager
 {
     private string $name;
-    protected array $headers = [
-        'X-Registry-Auth' => null
-    ];
     protected array $query = [
+        'repo' => null,
         'tag' => null
     ];
 
@@ -22,22 +20,22 @@ class ImagesPush extends Manager
         $this->name = $name;
     }
 
+    public function setRepo(string $value): self
+    {
+        $this->query['repo'] = $value;
+        return $this;
+    }
+
     public function setTag(string $value): self
     {
         $this->query['tag'] = $value;
         return $this;
     }
 
-    public function setXRegistryAuth(string $value): self
-    {
-        $this->headers['X-Registry-Auth'] = $value;
-        return $this;
-    }
-
     public function result(): string
     {
         return $this
-            ->send('POST', 'images/' . $this->name . '/push')
+            ->send('POST', 'images/' . $this->name . '/tag')
             ->isOk();
     }
 }
