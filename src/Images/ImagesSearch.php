@@ -34,7 +34,7 @@ class ImagesSearch extends Manager
     public function result(): array
     {
         return $this
-            ->send('POST', 'build/search')
+            ->send('GET', 'images/search')
             ->toArray();
     }
 
