@@ -26,4 +26,9 @@ class ImagesFactory extends Factory
     {
         return new ImagesCreate($this->client);
     }
+
+    public function inspect(string $name): ImagesInspect
+    {
+        return new ImagesInspect($this->client, $name);
+    }
 }
