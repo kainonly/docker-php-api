@@ -34,11 +34,10 @@ class ImagesPush extends Manager
         return $this;
     }
 
-    public function result(): array
+    public function result(): string
     {
         return $this
             ->send('POST', 'images/' . $this->name . '/push')
-            ->toArray();
+            ->isOk();
     }
-
 }

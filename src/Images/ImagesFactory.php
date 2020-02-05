@@ -41,4 +41,14 @@ class ImagesFactory extends Factory
     {
         return new ImagesPush($this->client, $name);
     }
+
+    public function tag(string $name): ImagesTag
+    {
+        return new ImagesTag($this->client, $name);
+    }
+
+    public function remove(string $name): ImagesRemove
+    {
+        return new ImagesRemove($this->client, $name);
+    }
 }
