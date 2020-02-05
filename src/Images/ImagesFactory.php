@@ -21,4 +21,9 @@ class ImagesFactory extends Factory
     {
         return new ImagesBuildPrune($this->client);
     }
+
+    public function create(): ImagesCreate
+    {
+        return new ImagesCreate($this->client);
+    }
 }

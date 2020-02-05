@@ -184,7 +184,7 @@ class ImagesBuild extends Manager
     {
         return $this
             ->send('POST', 'build')
-            ->toString();
+            ->isOk();
     }
 
 }
