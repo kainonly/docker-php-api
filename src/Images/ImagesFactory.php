@@ -36,4 +36,9 @@ class ImagesFactory extends Factory
     {
         return new ImagesHistory($this->client, $name);
     }
+
+    public function push(string $name): ImagesPush
+    {
+        return new ImagesPush($this->client, $name);
+    }
 }
