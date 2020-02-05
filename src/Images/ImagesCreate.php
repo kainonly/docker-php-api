@@ -48,9 +48,9 @@ class ImagesCreate extends Manager
         return $this;
     }
 
-    public function setXRegistryConfig(string $value): self
+    public function setXRegistryAuth(string $value): self
     {
-        $this->headers['X-Registry-Config'] = $value;
+        $this->headers['X-Registry-Auth'] = $value;
         return $this;
     }
 
