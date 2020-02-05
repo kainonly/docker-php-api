@@ -31,4 +31,9 @@ class ImagesFactory extends Factory
     {
         return new ImagesInspect($this->client, $name);
     }
+
+    public function history(string $name): ImagesHistory
+    {
+        return new ImagesHistory($this->client, $name);
+    }
 }
