@@ -5,25 +5,11 @@ namespace Docker\Api\Images;
 
 use Docker\Api\Common\Manager;
 
-class ImagesSearch extends Manager
+class ImagesPrune extends Manager
 {
     protected array $query = [
-        'term' => null,
-        'limit' => null,
         'filters' => null
     ];
-
-    public function setTerm(string $value): self
-    {
-        $this->query['term'] = $value;
-        return $this;
-    }
-
-    public function setLimit(int $value): self
-    {
-        $this->query['limit'] = $value;
-        return $this;
-    }
 
     public function setFilters(array $value): self
     {
@@ -34,8 +20,7 @@ class ImagesSearch extends Manager
     public function result(): array
     {
         return $this
-            ->send('GET', 'images/search')
+            ->send('POST', 'images/prune')
             ->toArray();
     }
-
 }

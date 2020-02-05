@@ -57,5 +57,10 @@ class ImagesFactory extends Factory
         return new ImagesSearch($this->client);
     }
 
+    public function prune(): ImagesPrune
+    {
+        return new ImagesPrune($this->client);
+    }
+
 
 }
