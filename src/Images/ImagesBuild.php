@@ -186,5 +186,4 @@ class ImagesBuild extends Manager
             ->send('POST', 'build')
             ->isOk();
     }
-
 }

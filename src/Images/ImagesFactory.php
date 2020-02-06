@@ -62,5 +62,9 @@ class ImagesFactory extends Factory
         return new ImagesPrune($this->client);
     }
 
+    public function commit(): ImagesCommit
+    {
+        return new ImagesCommit($this->client);
+    }
 
 }
