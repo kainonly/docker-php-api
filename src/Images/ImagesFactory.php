@@ -77,4 +77,9 @@ class ImagesFactory extends Factory
         return new ImagesExports($this->client);
     }
 
+    public function import(): ImagesImport
+    {
+        return new ImagesImport($this->client);
+    }
+
 }
