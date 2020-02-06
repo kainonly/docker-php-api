@@ -236,10 +236,10 @@ class ImagesCommit extends Manager
         return $this;
     }
 
-    public function result(): string
+    public function result(): array
     {
         return $this
             ->send('POST', 'commit')
-            ->isOk();
+            ->toArray();
     }
 }

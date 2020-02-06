@@ -67,4 +67,9 @@ class ImagesFactory extends Factory
         return new ImagesCommit($this->client);
     }
 
+    public function export(string $name): ImagesExport
+    {
+        return new ImagesExport($this->client, $name);
+    }
+
 }
