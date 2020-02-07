@@ -31,4 +31,9 @@ class ContainersFactory extends Factory
     {
         return new ContainersLogs($this->client, $id);
     }
+
+    public function changes(string $id): ContainersChanges
+    {
+        return new ContainersChanges($this->client, $id);
+    }
 }
