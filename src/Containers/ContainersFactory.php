@@ -16,4 +16,9 @@ class ContainersFactory extends Factory
     {
         return new ContainersCreate($this->client);
     }
+
+    public function inspect(string $id): ContainersInspect
+    {
+        return new ContainersInspect($this->client, $id);
+    }
 }
