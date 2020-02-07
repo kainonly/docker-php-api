@@ -7,8 +7,6 @@ use Docker\Api\Common\Manager;
 
 class ContainersList extends Manager
 {
-    protected string $method = 'GET';
-    protected string $path = 'containers/json';
     protected array $query = [
         'all' => false,
         'limit' => null,
@@ -42,6 +40,8 @@ class ContainersList extends Manager
 
     public function result(): array
     {
-        return $this->send()->toArray();
+        return $this
+            ->send('GET', 'containers/json')
+            ->toArray();
     }
 }
