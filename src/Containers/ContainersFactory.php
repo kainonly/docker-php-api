@@ -26,4 +26,9 @@ class ContainersFactory extends Factory
     {
         return new ContainersTop($this->client, $id);
     }
+
+    public function logs(string $id): ContainersLogs
+    {
+        return new ContainersLogs($this->client, $id);
+    }
 }
