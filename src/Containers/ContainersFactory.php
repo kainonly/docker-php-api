@@ -21,4 +21,9 @@ class ContainersFactory extends Factory
     {
         return new ContainersInspect($this->client, $id);
     }
+
+    public function top(string $id): ContainersTop
+    {
+        return new ContainersTop($this->client, $id);
+    }
 }
