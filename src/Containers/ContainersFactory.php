@@ -81,4 +81,11 @@ class ContainersFactory extends Factory
     {
         return new ContainersRename($this->client, $id);
     }
+
+    public function pause(string $id): ContainersPause
+    {
+        return new ContainersPause($this->client, $id);
+    }
+
+
 }
