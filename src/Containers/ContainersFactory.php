@@ -57,5 +57,9 @@ class ContainersFactory extends Factory
         return new ContainersStart($this->client, $id);
     }
 
+    public function stop(string $id): ContainersStop
+    {
+        return new ContainersStop($this->client, $id);
+    }
 
 }
