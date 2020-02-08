@@ -76,4 +76,9 @@ class ContainersFactory extends Factory
     {
         return new ContainersUpdate($this->client, $id);
     }
+
+    public function rename(string $id): ContainersRename
+    {
+        return new ContainersRename($this->client, $id);
+    }
 }
