@@ -46,4 +46,9 @@ class ContainersFactory extends Factory
     {
         return new ContainersStats($this->client, $id);
     }
+
+    public function resize(string $id): ContainersResize
+    {
+        return new ContainersResize($this->client, $id);
+    }
 }

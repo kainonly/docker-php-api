@@ -16,10 +16,10 @@ class ContainersExport extends Manager
         $this->id = $id;
     }
 
-    public function result(): array
+    public function result(): string
     {
         return $this
             ->send('GET', 'containers/' . $this->id . '/export')
-            ->toArray();
+            ->isOk();
     }
 }
