@@ -67,5 +67,10 @@ class ContainersFactory extends Factory
         return new ContainersRestart($this->client, $id);
     }
 
+    public function kill(string $id): ContainersKill
+    {
+        return new ContainersKill($this->client, $id);
+    }
+
 
 }
