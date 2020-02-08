@@ -41,4 +41,9 @@ class ContainersFactory extends Factory
     {
         return new ContainersExport($this->client, $id);
     }
+
+    public function stats(string $id): ContainersStats
+    {
+        return new ContainersStats($this->client, $id);
+    }
 }
