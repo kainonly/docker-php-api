@@ -72,5 +72,8 @@ class ContainersFactory extends Factory
         return new ContainersKill($this->client, $id);
     }
 
-
+    public function update(string $id): ContainersUpdate
+    {
+        return new ContainersUpdate($this->client, $id);
+    }
 }
