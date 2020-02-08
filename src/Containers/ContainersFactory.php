@@ -36,4 +36,9 @@ class ContainersFactory extends Factory
     {
         return new ContainersChanges($this->client, $id);
     }
+
+    public function export(string $id): ContainersExport
+    {
+        return new ContainersExport($this->client, $id);
+    }
 }
