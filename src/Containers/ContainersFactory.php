@@ -87,5 +87,9 @@ class ContainersFactory extends Factory
         return new ContainersPause($this->client, $id);
     }
 
+    public function unpause(string $id): ContainersUnpause
+    {
+        return new ContainersUnpause($this->client, $id);
+    }
 
 }
