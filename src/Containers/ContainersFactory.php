@@ -117,5 +117,10 @@ class ContainersFactory extends Factory
         return new ContainersArchiveInformation($this->client, $id);
     }
 
+    public function archive(string $id): ContainersArchive
+    {
+        return new ContainersArchive($this->client, $id);
+    }
+
 
 }
