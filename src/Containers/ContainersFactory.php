@@ -126,4 +126,9 @@ class ContainersFactory extends Factory
     {
         return new ContainersArchiveExtract($this->client, $id);
     }
+
+    public function prune(): ContainersPrune
+    {
+        return new ContainersPrune($this->client);
+    }
 }
