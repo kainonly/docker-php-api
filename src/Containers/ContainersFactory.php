@@ -102,5 +102,10 @@ class ContainersFactory extends Factory
         return new ContainersAttachWebsocket($this->client, $id);
     }
 
+    public function wait(string $id): ContainersWait
+    {
+        return new ContainersWait($this->client, $id);
+    }
+
 
 }
