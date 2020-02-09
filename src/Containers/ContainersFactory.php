@@ -92,4 +92,10 @@ class ContainersFactory extends Factory
         return new ContainersUnpause($this->client, $id);
     }
 
+    public function attach(string $id): ContainersAttach
+    {
+        return new ContainersAttach($this->client, $id);
+    }
+
+
 }
