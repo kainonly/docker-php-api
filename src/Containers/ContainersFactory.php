@@ -97,5 +97,10 @@ class ContainersFactory extends Factory
         return new ContainersAttach($this->client, $id);
     }
 
+    public function attachWebsocket(string $id): ContainersAttachWebsocket
+    {
+        return new ContainersAttachWebsocket($this->client, $id);
+    }
+
 
 }
