@@ -122,5 +122,8 @@ class ContainersFactory extends Factory
         return new ContainersArchive($this->client, $id);
     }
 
-
+    public function archiveExtract(string $id): ContainersArchiveExtract
+    {
+        return new ContainersArchiveExtract($this->client, $id);
+    }
 }
