@@ -111,4 +111,11 @@ class ContainersFactory extends Factory
     {
         return new ContainersRemove($this->client, $id);
     }
+
+    public function archiveInformation(string $id): ContainersArchiveInformation
+    {
+        return new ContainersArchiveInformation($this->client, $id);
+    }
+
+
 }
