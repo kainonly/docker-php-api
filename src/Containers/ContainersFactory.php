@@ -107,5 +107,8 @@ class ContainersFactory extends Factory
         return new ContainersWait($this->client, $id);
     }
 
-
+    public function remove(string $id): ContainersRemove
+    {
+        return new ContainersRemove($this->client, $id);
+    }
 }
