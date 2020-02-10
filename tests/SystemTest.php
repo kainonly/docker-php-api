@@ -44,14 +44,14 @@ class SystemTest extends BaseTest
         $this->assertEquals($result, 'OK');
     }
 
-    public function testEvents()
-    {
-        $result = $this->client
-            ->system
-            ->events()
-            ->result();
-        $this->assertNotNull($result);
-    }
+//    public function testEvents()
+//    {
+//        $result = $this->client
+//            ->system
+//            ->events()
+//            ->result();
+//        $this->assertNotNull($result);
+//    }
 
     public function testDf()
     {
