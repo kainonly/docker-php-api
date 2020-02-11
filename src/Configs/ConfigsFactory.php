@@ -12,4 +12,9 @@ class ConfigsFactory extends Factory
         return new ConfigsList($this->client);
     }
 
+    public function create(): ConfigsCreate
+    {
+        return new ConfigsCreate($this->client);
+    }
+
 }
