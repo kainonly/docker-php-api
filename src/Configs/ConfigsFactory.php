@@ -27,4 +27,9 @@ class ConfigsFactory extends Factory
         return new ConfigsDelete($this->client, $id);
     }
 
+    public function update(string $id): ConfigsUpdate
+    {
+        return new ConfigsUpdate($this->client, $id);
+    }
+
 }
