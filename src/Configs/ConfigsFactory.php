@@ -17,4 +17,9 @@ class ConfigsFactory extends Factory
         return new ConfigsCreate($this->client);
     }
 
+    public function inspect(string $id): ConfigsInspect
+    {
+        return new ConfigsInspect($this->client, $id);
+    }
+
 }
