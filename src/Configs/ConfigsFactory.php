@@ -22,4 +22,9 @@ class ConfigsFactory extends Factory
         return new ConfigsInspect($this->client, $id);
     }
 
+    public function delete(string $id): ConfigsDelete
+    {
+        return new ConfigsDelete($this->client, $id);
+    }
+
 }
