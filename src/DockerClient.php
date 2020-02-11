@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Docker\Api;
 
+use Docker\Api\Configs\ConfigsFactory;
 use GuzzleHttp\Client;
 use Docker\Api\Containers\ContainersFactory;
 use Docker\Api\Exec\ExecFactory;
@@ -21,6 +22,7 @@ class DockerClient
     public NetworksFactory $networks;
     public VolumesFactory $volumes;
     public ExecFactory $exec;
+    public ConfigsFactory $configs;
     public PluginsFactory $plugins;
 
     public static function create(string $uri, float $timeout = 15.0): self
@@ -46,6 +48,7 @@ class DockerClient
         $this->networks = new NetworksFactory($this->client);
         $this->volumes = new VolumesFactory($this->client);
         $this->exec = new ExecFactory($this->client);
+        $this->configs = new ConfigsFactory($this->client);
         $this->plugins = new PluginsFactory($this->client);
     }
 }
