@@ -1,3 +1,3 @@
 # Docker PHP Api
 
-Easy-to-use Docker API SDK
+Easy-to-use Docker Engine API SDK
