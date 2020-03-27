@@ -15,7 +15,6 @@ use Docker\Api\Volumes\VolumesFactory;
 
 class DockerClient
 {
-    private Client $client;
     public SystemFactory $system;
     public ImagesFactory $images;
     public ContainersFactory $containers;
@@ -25,30 +24,15 @@ class DockerClient
     public ConfigsFactory $configs;
     public PluginsFactory $plugins;
 
-    public static function create(string $uri, float $timeout = 15.0): self
+    public function __construct(Client $client)
     {
-        $client = new self($uri, $timeout);
-        $client->factorys();
-        return $client;
-    }
-
-    public function __construct(string $uri, float $timeout)
-    {
-        $this->client = new Client([
-            'base_uri' => $uri,
-            'timeout' => $timeout,
-        ]);
-    }
-
-    private function factorys()
-    {
-        $this->system = new SystemFactory($this->client);
-        $this->images = new ImagesFactory($this->client);
-        $this->containers = new ContainersFactory($this->client);
-        $this->networks = new NetworksFactory($this->client);
-        $this->volumes = new VolumesFactory($this->client);
-        $this->exec = new ExecFactory($this->client);
-        $this->configs = new ConfigsFactory($this->client);
-        $this->plugins = new PluginsFactory($this->client);
+        $this->system = new SystemFactory($client);
+        $this->images = new ImagesFactory($client);
+        $this->containers = new ContainersFactory($client);
+        $this->networks = new NetworksFactory($client);
+        $this->volumes = new VolumesFactory($client);
+        $this->exec = new ExecFactory($client);
+        $this->configs = new ConfigsFactory($client);
+        $this->plugins = new PluginsFactory($client);
     }
 }
