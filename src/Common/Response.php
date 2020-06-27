@@ -1,31 +1,88 @@
 <?php
 declare(strict_types=1);
 
-namespace Docker\Api\Common;
+namespace DockerEngineAPI\Common;
 
 use Psr\Http\Message\ResponseInterface;
 
 class Response
 {
-    private ResponseInterface $response;
+    /**
+     * @var bool
+     */
+    private bool $error;
+    /**
+     * @var string
+     */
+    private string $msg;
+    /**
+     * @var array
+     */
+    private array $data;
 
-    public function __construct(ResponseInterface $response)
+    /**
+     * @param ResponseInterface $response
+     * @return static
+     */
+    public static function make(ResponseInterface $response): self
     {
-        $this->response = $response;
+        $self = new self();
+        $self->error = false;
+        $self->msg = 'ok';
+        $raw = $response->getBody()->getContents();
+        $self->data = !empty($raw) ? json_decode($raw, true) : [];
+        return $self;
     }
 
-    public function toString(): string
+    /**
+     * @param string $reason
+     * @return static
+     */
+    public static function bad(string $reason): self
     {
-        return $this->response->getBody()->getContents();
+        $self = new self();
+        $self->error = true;
+        $self->msg = $reason;
+        $self->data = [];
+        return $self;
     }
 
-    public function toArray(): array
+    /**
+     * @return bool
+     */
+    public function isError(): bool
     {
-        return json_decode($this->response->getBody()->getContents(), true);
+        return $this->error;
     }
 
-    public function isOk(): string
+    /**
+     * @return string
+     */
+    public function getMsg(): string
     {
-        return 'OK';
+        return $this->msg;
+    }
+
+    /**
+     * @return array
+     */
+    public function getData(): array
+    {
+        return $this->data;
+    }
+
+    /**
+     * @return array
+     */
+    public function result(): array
+    {
+        return $this->error ? [
+            'error' => 1,
+            'msg' => $this->msg
+        ] : [
+            'error' => 0,
+            'msg' => $this->msg,
+            'data' => $this->data
+        ];
     }
 }
