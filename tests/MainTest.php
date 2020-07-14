@@ -17,4 +17,19 @@ class MainTest extends BaseTest
             $this->expectErrorMessage($e->getMessage());
         }
     }
+
+    public function testAuth(): void
+    {
+        try {
+            $this->client->auth(
+                getenv('username'),
+                getenv('password'),
+                getenv('email'),
+                getenv('serveraddress')
+            );
+            self::assertNull(null);
+        } catch (Exception $e) {
+            $this->expectErrorMessage($e->getMessage());
+        }
+    }
 }
