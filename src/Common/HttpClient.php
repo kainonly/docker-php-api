@@ -12,6 +12,10 @@ class HttpClient implements HttpClientInterface
      * @var Client
      */
     private Client $client;
+    /**
+     * @var array
+     */
+    private array $headers = [];
 
     /**
      * HttpClient constructor.
@@ -41,6 +45,9 @@ class HttpClient implements HttpClientInterface
         try {
             $uri = array_filter($uri, fn($v) => $v !== null);
             $options = [];
+            if (!empty($this->headers)) {
+                $options['header'] = array_filter($this->headers, fn($v) => $v !== null);
+            }
             if (!empty($query)) {
                 $options['query'] = array_filter($query, fn($v) => $v !== null);
             }
@@ -54,5 +61,14 @@ class HttpClient implements HttpClientInterface
         } catch (Exception $exception) {
             return Response::bad($exception->getMessage());
         }
+    }
+
+    /**
+     * @param string $name
+     * @param string $value
+     */
+    public function setHeader(string $name, string $value): void
+    {
+        $this->headers[$name] = $value;
     }
 }
