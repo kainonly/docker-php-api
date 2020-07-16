@@ -5,6 +5,9 @@ namespace DockerEngineAPI\Common;
 
 class LogConfig
 {
+    /**
+     * @var array
+     */
     private array $body = [];
 
     /**

@@ -66,38 +66,38 @@ class HostConfig
 
     /**
      * Limit read rate (bytes per second) from a device, in the form [{"Path": "device_path", "Rate": rate}].
-     * @param array $value
+     * @param ThrottleDevice[] $value
      */
     public function setBlkioDeviceReadBps(array $value): void
     {
-        $this->body['BlkioDeviceReadBps'] = $value;
+        $this->body['BlkioDeviceReadBps'] = array_map(fn($v) => $v->valueOf(), $value);
     }
 
     /**
      * Limit write rate (bytes per second) to a device, in the form [{"Path": "device_path", "Rate": rate}].
-     * @param array $value
+     * @param ThrottleDevice[] $value
      */
     public function setBlkioDeviceWriteBps(array $value): void
     {
-        $this->body['BlkioDeviceWriteBps'] = $value;
+        $this->body['BlkioDeviceWriteBps'] = array_map(fn($v) => $v->valueOf(), $value);
     }
 
     /**
      * Limit read rate (IO per second) from a device, in the form [{"Path": "device_path", "Rate": rate}].
-     * @param array $value
+     * @param ThrottleDevice[] $value
      */
     public function setBlkioDeviceReadIOps(array $value): void
     {
-        $this->body['BlkioDeviceReadIOps'] = $value;
+        $this->body['BlkioDeviceReadIOps'] = array_map(fn($v) => $v->valueOf(), $value);
     }
 
     /**
      * Limit write rate (IO per second) to a device, in the form [{"Path": "device_path", "Rate": rate}].
-     * @param array $value
+     * @param ThrottleDevice[] $value
      */
     public function setBlkioDeviceWriteIOps(array $value): void
     {
-        $this->body['BlkioDeviceWriteIOps'] = $value;
+        $this->body['BlkioDeviceWriteIOps'] = array_map(fn($v) => $v->valueOf(), $value);
     }
 
     /**
@@ -415,6 +415,25 @@ class HostConfig
     public function setAutoRemove(bool $value): void
     {
         $this->body['AutoRemove'] = $value;
+    }
+
+    /**
+     * Driver that this container uses to mount volumes.
+     * @param string $value
+     */
+    public function setVolumeDriver(string $value): void
+    {
+        $this->body['VolumeDriver'] = $value;
+    }
+
+    /**
+     * A list of volumes to inherit from another container,
+     * specified in the form <container name>[:<ro|rw>].
+     * @param array $value
+     */
+    public function setVolumesFrom(array $value): void
+    {
+        $this->body['VolumesFrom'] = $value;
     }
 
 
