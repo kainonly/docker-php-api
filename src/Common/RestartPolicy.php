@@ -5,6 +5,9 @@ namespace DockerEngineAPI\Common;
 
 class RestartPolicy
 {
+    /**
+     * @var array
+     */
     private array $body = [];
 
     /**
