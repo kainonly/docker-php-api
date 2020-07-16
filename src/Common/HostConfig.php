@@ -377,7 +377,45 @@ class HostConfig
         $this->body['LogConfig'] = $config->valueOf();
     }
 
+    /**
+     * Network mode to use for this container.
+     * Supported standard values are: bridge, host, none, and container:<name|id>
+     * @param string $value
+     */
+    public function setNetworkMode(string $value): void
+    {
+        $this->body['NetworkMode'] = $value;
+    }
 
+    /**
+     * PortMap describes the mapping of container ports to host ports,
+     * using the container's port-number and protocol as key in the format <port>/<protocol>
+     * @param PortBinding[] $value
+     */
+    public function setPortBindings(array $value): void
+    {
+        $this->body['PortBindings'] = array_map(fn($v) => $v->valueOf(), $value);
+    }
+
+    /**
+     * The behavior to apply when the container exits.
+     * The default is not to restart.
+     * @param RestartPolicy $policy
+     */
+    public function setRestartPolicy(RestartPolicy $policy): void
+    {
+        $this->body['RestartPolicy'] = $policy->valueOf();
+    }
+
+    /**
+     * Automatically remove the container when the container's process exits.
+     * This has no effect if RestartPolicy is set.
+     * @param bool $value
+     */
+    public function setAutoRemove(bool $value): void
+    {
+        $this->body['AutoRemove'] = $value;
+    }
 
 
 }
