@@ -1,7 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace DockerEngineAPI\Common;
+namespace DockerEngineAPI\Factory;
+
+use DockerEngineAPI\Common\HttpClientInterface;
 
 abstract class Factory
 {

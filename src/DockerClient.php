@@ -4,8 +4,11 @@ declare(strict_types=1);
 namespace DockerEngineAPI;
 
 use DI\Container;
+use DI\DependencyException;
+use DI\NotFoundException;
 use DockerEngineAPI\Common\HttpClient;
 use DockerEngineAPI\Common\Response;
+use DockerEngineAPI\Factory\ContainersFactory;
 use GuzzleHttp\Client;
 use DockerEngineAPI\Common\HttpClientInterface;
 use Psr\Container\ContainerInterface;
@@ -79,5 +82,15 @@ class DockerClient
             'serveraddress' => $serveraddress
         ]);
         $this->client->setHeader('X-Registry-Auth', base64_encode($registryAuth));
+    }
+
+    /**
+     * @return ContainersFactory
+     * @throws DependencyException
+     * @throws NotFoundException
+     */
+    public function containers(): ContainersFactory
+    {
+        return $this->container->make(ContainersFactory::class);
     }
 }
