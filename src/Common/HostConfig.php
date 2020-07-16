@@ -171,11 +171,11 @@ class HostConfig
 
     /**
      * A list of devices to add to the container.
-     * @param array $value
+     * @param DeviceMapping[] $value
      */
     public function setDevices(array $value): void
     {
-        $this->body['Devices'] = $value;
+        $this->body['Devices'] = array_map(fn($v) => $v->valueOf(), $value);
     }
 
     /**
@@ -295,11 +295,11 @@ class HostConfig
     /**
      * A list of resource limits to set in the container.
      * For example: {"Name": "nofile", "Soft": 1024, "Hard": 2048}"
-     * @param array $value
+     * @param Ulimits[] $value
      */
     public function setUlimits(array $value): void
     {
-        $this->body['Ulimits'] = $value;
+        $this->body['Ulimits'] = array_map(fn($v) => $v->valueOf(), $value);
     }
 
     /**
