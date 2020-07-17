@@ -179,4 +179,24 @@ class ContainersFactory extends Factory
             ]
         );
     }
+
+    /**
+     * Resize the TTY for a container. You must restart the container for the resize to take effect.
+     * @param string $id ID or name of the container
+     * @param int $h Height of the tty session in characters
+     * @param int $w Width of the tty session in characters
+     * @return Response
+     * @see https://docs.docker.com/engine/api/v1.37/#operation/ContainerResize
+     */
+    public function resize(string $id, int $h, int $w): Response
+    {
+        return $this->client->request(
+            'POST',
+            ['containers', $id, 'resize'],
+            [
+                'h' => $h,
+                'w' => $w
+            ]
+        );
+    }
 }
