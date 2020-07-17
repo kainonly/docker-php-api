@@ -3,11 +3,6 @@ declare(strict_types=1);
 
 namespace DockerEngineAPI\Common;
 
-/**
- * Class ContainersCreateOption
- * @package DockerEngineAPI\Common
- * @see https://docs.docker.com/engine/api/v1.37/#operation/ContainerCreate
- */
 class ContainersCreateOption
 {
     /**
@@ -257,5 +252,13 @@ class ContainersCreateOption
     public function setNetworkingConfig(array $value): void
     {
         $this->body['NetworkingConfig'] = $value;
+    }
+
+    /**
+     * @return array
+     */
+    public function getBody(): array
+    {
+        return $this->body;
     }
 }

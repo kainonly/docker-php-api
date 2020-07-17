@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace DockerEngineAPI\Factory;
 
+use DockerEngineAPI\Common\ContainersCreateOption;
 use DockerEngineAPI\Common\Response;
 
 class ContainersFactory extends Factory
@@ -14,6 +15,7 @@ class ContainersFactory extends Factory
      * @param bool $size Return the size of container as fields SizeRw and SizeRootFs.
      * @param array $filters Filters to process on the container list, encoded as JSON (a map[string][]string).
      * @return Response
+     * @see https://docs.docker.com/engine/api/v1.37/#operation/ContainerList
      */
     public function lists(
         int $limit,
@@ -37,13 +39,143 @@ class ContainersFactory extends Factory
         );
     }
 
-    public function create(string $name): Response
+    /**
+     * Create a container
+     * @param string $name Assign the specified name to the container. Must match /?[a-zA-Z0-9_-]+
+     * @param ContainersCreateOption $option
+     * @return Response
+     * @see https://docs.docker.com/engine/api/v1.37/#operation/ContainerCreate
+     */
+    public function create(string $name, ContainersCreateOption $option): Response
     {
         return $this->client->request(
             'POST',
             ['containers', 'create'],
             [
                 'name' => $name
+            ],
+            $option->getBody()
+        );
+    }
+
+    /**
+     * Return low-level information about a container.
+     * @param string $id ID or name of the container
+     * @param bool $size Return the size of container as fields SizeRw and SizeRootFs
+     * @return Response
+     * @see https://docs.docker.com/engine/api/v1.37/#operation/ContainerInspect
+     */
+    public function inspect(string $id, bool $size = false): Response
+    {
+        return $this->client->request(
+            'GET',
+            ['containers', $id, 'json'],
+            [
+                'size' => $size
+            ]
+        );
+    }
+
+    /**
+     * On Unix systems, this is done by running the ps command.
+     * This endpoint is not supported on Windows.
+     * @param string $id ID or name of the container
+     * @param string $ps_args The arguments to pass to ps. For example, aux
+     * @return Response
+     * @see https://docs.docker.com/engine/api/v1.37/#operation/ContainerTop
+     */
+    public function top(string $id, string $ps_args): Response
+    {
+        return $this->client->request(
+            'GET',
+            ['containers', $id, 'top'],
+            [
+                'ps_args' => $ps_args
+            ]
+        );
+    }
+
+    /**
+     * Get stdout and stderr logs from a container.
+     * @param string $id ID or name of the container
+     * @param bool $follow Return the logs as a stream.
+     * @param bool $stdout Return logs from stdout
+     * @param bool $stderr Return logs from stderr
+     * @param int $since Only return logs since this time, as a UNIX timestamp
+     * @param int $until Only return logs before this time, as a UNIX timestamp
+     * @param bool $timestamps Add timestamps to every log line
+     * @param string $tail Only return this number of log lines from the end of the logs. Specify as an integer or all to output all log lines.
+     * @return Response
+     * @see https://docs.docker.com/engine/api/v1.37/#operation/ContainerLogs
+     */
+    public function logs(
+        string $id,
+        bool $follow = false,
+        bool $stdout = false,
+        bool $stderr = false,
+        int $since = 0,
+        int $until = 0,
+        bool $timestamps = false,
+        string $tail = 'all'
+    ): Response
+    {
+        return $this->client->request(
+            'GET',
+            ['containers', $id, 'logs'],
+            [
+                'follow' => $follow,
+                'stdout' => $stdout,
+                'stderr' => $stderr,
+                'since' => $since,
+                'until' => $until,
+                'timestamps' => $timestamps,
+                'tail' => $tail
+            ]
+        );
+    }
+
+    /**
+     * Get changes on a container’s filesystem
+     * @param string $id ID or name of the container
+     * @return Response
+     * @see https://docs.docker.com/engine/api/v1.37/#operation/ContainerChanges
+     */
+    public function changes(string $id): Response
+    {
+        return $this->client->request(
+            'GET',
+            ['containers', $id, 'changes'],
+        );
+    }
+
+    /**
+     * Export the contents of a container as a tarball.
+     * @param string $id ID or name of the container
+     * @return Response
+     * @see https://docs.docker.com/engine/api/v1.37/#operation/ContainerChanges
+     */
+    public function export(string $id): Response
+    {
+        return $this->client->request(
+            'GET',
+            ['containers', $id, 'export']
+        );
+    }
+
+    /**
+     * Get container stats based on resource usage
+     * @param string $id ID or name of the container
+     * @param bool $stream Stream the output. If false, the stats will be output once and then it will disconnect.
+     * @return Response
+     * @see https://docs.docker.com/engine/api/v1.37/#operation/ContainerStats
+     */
+    public function stats(string $id, bool $stream): Response
+    {
+        return $this->client->request(
+            'GET',
+            ['containers', $id, 'stats'],
+            [
+                'stream' => $stream
             ]
         );
     }
