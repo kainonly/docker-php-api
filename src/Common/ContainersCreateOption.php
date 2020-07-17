@@ -3,6 +3,11 @@ declare(strict_types=1);
 
 namespace DockerEngineAPI\Common;
 
+/**
+ * Class ContainersCreateOption
+ * @package DockerEngineAPI\Common
+ * @see https://docs.docker.com/engine/api/v1.37/#operation/ContainerCreate
+ */
 class ContainersCreateOption
 {
     /**
@@ -121,11 +126,11 @@ class ContainersCreateOption
 
     /**
      * A test to perform to check that the container is healthy.
-     * @param HealthConfig $healthConfig
+     * @param array $value
      */
-    public function setHealthcheck(HealthConfig $healthConfig): void
+    public function setHealthcheck(array $value): void
     {
-        $this->body['Healthcheck'] = $healthConfig->valueOf();
+        $this->body['Healthcheck'] = $value;
     }
 
     /**
@@ -236,8 +241,21 @@ class ContainersCreateOption
         $this->body['Shell'] = $value;
     }
 
-    public function setHostConfig(): void
+    /**
+     * Container configuration that depends on the host we are running on
+     * @param array $value
+     */
+    public function setHostConfig(array $value): void
     {
+        $this->body['HostConfig'] = $value;
+    }
 
+    /**
+     * This container's networking configuration.
+     * @param array $value
+     */
+    public function setNetworkingConfig(array $value): void
+    {
+        $this->body['NetworkingConfig'] = $value;
     }
 }
