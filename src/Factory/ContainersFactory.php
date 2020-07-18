@@ -236,4 +236,40 @@ class ContainersFactory extends Factory
             ]
         );
     }
+
+    /**
+     * Restart a container
+     * @param string $id ID or name of the container
+     * @param int $t Number of seconds to wait before killing the container
+     * @return Response
+     * @see https://docs.docker.com/engine/api/v1.37/#operation/ContainerRestart
+     */
+    public function restart(string $id, int $t): Response
+    {
+        return $this->client->request(
+            'POST',
+            ['containers', $id, 'restart'],
+            [
+                't' => $t
+            ]
+        );
+    }
+
+    /**
+     * Send a POSIX signal to a container, defaulting to killing to the container.
+     * @param string $id ID or name of the container
+     * @param string $signal Signal to send to the container as an integer or string (e.g. SIGINT)
+     * @return Response
+     * @see https://docs.docker.com/engine/api/v1.37/#operation/ContainerKill
+     */
+    public function kill(string $id, string $signal = 'SIGKILL'): Response
+    {
+        return $this->client->request(
+            'POST',
+            ['containers', $id, 'kill'],
+            [
+                'signal' => $signal
+            ]
+        );
+    }
 }
