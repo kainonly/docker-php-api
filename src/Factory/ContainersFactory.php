@@ -199,4 +199,41 @@ class ContainersFactory extends Factory
             ]
         );
     }
+
+    /**
+     * Start a container
+     * @param string $id ID or name of the container
+     * @param string $detachKeys Override the key sequence for detaching a container.
+     * Format is a single character [a-Z] or ctrl-<value> where <value> is one of: a-z, @, ^, [, , or _.
+     * @return Response
+     * @see https://docs.docker.com/engine/api/v1.37/#operation/ContainerStart
+     */
+    public function start(string $id, string $detachKeys): Response
+    {
+        return $this->client->request(
+            'POST',
+            ['containers', $id, 'start'],
+            [
+                'detachKeys' => $detachKeys
+            ]
+        );
+    }
+
+    /**
+     * Stop a container
+     * @param string $id ID or name of the container
+     * @param int $t Number of seconds to wait before killing the containe
+     * @return Response
+     * @see https://docs.docker.com/engine/api/v1.37/#operation/ContainerStop
+     */
+    public function stop(string $id, int $t): Response
+    {
+        return $this->client->request(
+            'POST',
+            ['containers', $id, 'stop'],
+            [
+                't' => $t
+            ]
+        );
+    }
 }
