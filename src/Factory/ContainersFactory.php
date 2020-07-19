@@ -272,4 +272,19 @@ class ContainersFactory extends Factory
             ]
         );
     }
+
+    /**
+     * Change various configuration options of a container without having to recreate it.
+     * @param string $id ID or name of the container
+     * @return Response
+     * @see https://docs.docker.com/engine/api/v1.37/#operation/ContainerUpdate
+     */
+    public function update(string $id): Response
+    {
+        return $this->client->request(
+            'POST',
+            ['containers', $id, 'update'],
+            [],
+        );
+    }
 }
