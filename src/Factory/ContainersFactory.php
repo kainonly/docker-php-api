@@ -10,14 +10,14 @@ use DockerEngineAPI\Common\ContainersLogsOption;
 use DockerEngineAPI\Common\ContainersUpdateOption;
 use DockerEngineAPI\Common\Response;
 
-class ContainersFactory extends Factory
+class ContainersFactory extends CommonFactory
 {
     /**
      * Returns a list of containers
      * @param int $limit Return this number of most recently created containers, including non-running ones.
      * @param bool $all Return all containers
      * @param bool $size Return the size of container as fields SizeRw and SizeRootFs.
-     * @param array|null $filters Filters to process on the container list, encoded as JSON (a map[string][]string).
+     * @param array $filters Filters to process on the container list, encoded as JSON (a map[string][]string).
      * @return Response
      * @see https://docs.docker.com/engine/api/v1.37/#operation/ContainerList
      */
@@ -25,7 +25,7 @@ class ContainersFactory extends Factory
         int $limit,
         bool $all = false,
         bool $size = false,
-        ?array $filters = null
+        array $filters = []
     ): Response
     {
         $query = [
@@ -39,6 +39,7 @@ class ContainersFactory extends Factory
         return $this->client->request(
             'GET',
             ['containers', 'json'],
+            [],
             $query
         );
     }
@@ -55,6 +56,7 @@ class ContainersFactory extends Factory
         return $this->client->request(
             'POST',
             ['containers', 'create'],
+            [],
             [
                 'name' => $name
             ],
@@ -74,6 +76,7 @@ class ContainersFactory extends Factory
         return $this->client->request(
             'GET',
             ['containers', $id, 'json'],
+            [],
             [
                 'size' => $size
             ]
@@ -93,6 +96,7 @@ class ContainersFactory extends Factory
         return $this->client->request(
             'GET',
             ['containers', $id, 'top'],
+            [],
             [
                 'ps_args' => $ps_args
             ]
@@ -111,6 +115,7 @@ class ContainersFactory extends Factory
         return $this->client->request(
             'GET',
             ['containers', $id, 'logs'],
+            [],
             $option->getQuery()
         );
     }
@@ -155,6 +160,7 @@ class ContainersFactory extends Factory
         return $this->client->request(
             'GET',
             ['containers', $id, 'stats'],
+            [],
             [
                 'stream' => $stream
             ]
@@ -174,6 +180,7 @@ class ContainersFactory extends Factory
         return $this->client->request(
             'POST',
             ['containers', $id, 'resize'],
+            [],
             [
                 'h' => $h,
                 'w' => $w
@@ -194,6 +201,7 @@ class ContainersFactory extends Factory
         return $this->client->request(
             'POST',
             ['containers', $id, 'start'],
+            [],
             [
                 'detachKeys' => $detachKeys
             ]
@@ -212,6 +220,7 @@ class ContainersFactory extends Factory
         return $this->client->request(
             'POST',
             ['containers', $id, 'stop'],
+            [],
             [
                 't' => $t
             ]
@@ -230,6 +239,7 @@ class ContainersFactory extends Factory
         return $this->client->request(
             'POST',
             ['containers', $id, 'restart'],
+            [],
             [
                 't' => $t
             ]
@@ -248,6 +258,7 @@ class ContainersFactory extends Factory
         return $this->client->request(
             'POST',
             ['containers', $id, 'kill'],
+            [],
             [
                 'signal' => $signal
             ]
@@ -257,6 +268,7 @@ class ContainersFactory extends Factory
     /**
      * Change various configuration options of a container without having to recreate it.
      * @param string $id ID or name of the container
+     * @param ContainersUpdateOption $option
      * @return Response
      * @see https://docs.docker.com/engine/api/v1.37/#operation/ContainerUpdate
      */
@@ -265,6 +277,7 @@ class ContainersFactory extends Factory
         return $this->client->request(
             'POST',
             ['containers', $id, 'update'],
+            [],
             $option->getBody()
         );
     }
@@ -281,6 +294,7 @@ class ContainersFactory extends Factory
         return $this->client->request(
             'POST',
             ['containers', $id, 'rename'],
+            [],
             [
                 'name' => $name
             ],
@@ -328,6 +342,7 @@ class ContainersFactory extends Factory
         return $this->client->request(
             'POST',
             ['containers', $id, 'attach'],
+            [],
             $option->getQuery()
         );
     }
@@ -344,6 +359,7 @@ class ContainersFactory extends Factory
         return $this->client->request(
             'GET',
             ['containers', $id, 'attach', 'ws'],
+            [],
             $option->getQuery()
         );
     }
@@ -360,6 +376,7 @@ class ContainersFactory extends Factory
         return $this->client->request(
             'POST',
             ['containers', $id, 'wait'],
+            [],
             [
                 'condition' => $condition
             ]
@@ -385,6 +402,7 @@ class ContainersFactory extends Factory
         return $this->client->request(
             'DELETE',
             ['containers', $id],
+            [],
             [
                 'v' => $v,
                 'force' => $force,
@@ -405,6 +423,7 @@ class ContainersFactory extends Factory
         return $this->client->request(
             'HEAD',
             ['containers', $id, 'archive'],
+            [],
             [
                 'path' => $path,
             ]
@@ -423,6 +442,7 @@ class ContainersFactory extends Factory
         return $this->client->request(
             'GET',
             ['containers', $id, 'archive'],
+            [],
             [
                 'path' => $path,
             ]
@@ -442,6 +462,7 @@ class ContainersFactory extends Factory
         return $this->client->request(
             'PUT',
             ['containers', $id, 'archive'],
+            [],
             [
                 'path' => $path,
                 'noOverwriteDirNonDir' => $noOverwriteDirNonDir
@@ -455,14 +476,17 @@ class ContainersFactory extends Factory
      * @return Response
      * @see https://docs.docker.com/engine/api/v1.37/#operation/ContainerPrune
      */
-    public function prune(array $filters): Response
+    public function prune(array $filters = []): Response
     {
+        $query = [];
+        if (!empty($filters)) {
+            $query['filters'] = json_encode($filters);
+        }
         return $this->client->request(
             'PUT',
             ['containers', 'prune'],
-            [
-                'filters' => json_encode($filters),
-            ]
+            [],
+            $query
         );
     }
 }

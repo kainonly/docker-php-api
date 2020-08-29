@@ -29,8 +29,9 @@ class HttpClient implements HttpClientInterface
     /**
      * @param string $method
      * @param array $uri
-     * @param array|null $query
-     * @param array|null $body
+     * @param array $header
+     * @param array $query
+     * @param array $body
      * @return Response
      * @noinspection PhpDocMissingThrowsInspection
      * @inheritDoc
@@ -38,15 +39,17 @@ class HttpClient implements HttpClientInterface
     public function request(
         string $method,
         array $uri,
-        ?array $query = null,
-        ?array $body = null
+        array $header = [],
+        array $query = [],
+        array $body = []
     ): Response
     {
         try {
             $uri = array_filter($uri, fn($v) => $v !== null);
             $options = [];
-            if (!empty($this->headers)) {
-                $options['header'] = array_filter($this->headers, fn($v) => $v !== null);
+            $header = array_merge($this->headers, $header);
+            if (!empty($header)) {
+                $options['header'] = array_filter($header, fn($v) => $v !== null);
             }
             if (!empty($query)) {
                 $options['query'] = array_filter($query, fn($v) => $v !== null);
