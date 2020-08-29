@@ -9,6 +9,7 @@ use DI\NotFoundException;
 use DockerEngineAPI\Common\HttpClient;
 use DockerEngineAPI\Common\Response;
 use DockerEngineAPI\Factory\ContainersFactory;
+use DockerEngineAPI\Factory\ImagesFactory;
 use GuzzleHttp\Client;
 use DockerEngineAPI\Common\HttpClientInterface;
 use Psr\Container\ContainerInterface;
@@ -92,5 +93,15 @@ class DockerClient
     public function containers(): ContainersFactory
     {
         return $this->container->make(ContainersFactory::class);
+    }
+
+    /**
+     * @return ImagesFactory
+     * @throws DependencyException
+     * @throws NotFoundException
+     */
+    public function images(): ImagesFactory
+    {
+        return $this->container->make(ImagesFactory::class);
     }
 }

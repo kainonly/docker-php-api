@@ -5,7 +5,7 @@ namespace DockerEngineAPI\Factory;
 
 use DockerEngineAPI\Common\HttpClientInterface;
 
-abstract class Factory
+abstract class CommonFactory
 {
     /**
      * @var HttpClientInterface
