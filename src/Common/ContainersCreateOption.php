@@ -5,9 +5,6 @@ namespace DockerEngineAPI\Common;
 
 class ContainersCreateOption
 {
-    /**
-     * @var array body
-     */
     private array $body = [
         'AttachStdin' => false,
         'AttachStdout' => true,
