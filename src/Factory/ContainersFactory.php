@@ -3,7 +3,11 @@ declare(strict_types=1);
 
 namespace DockerEngineAPI\Factory;
 
+use DockerEngineAPI\Common\ContainersAttachOption;
+use DockerEngineAPI\Common\ContainersAttachWsOption;
 use DockerEngineAPI\Common\ContainersCreateOption;
+use DockerEngineAPI\Common\ContainersLogsOption;
+use DockerEngineAPI\Common\ContainersUpdateOption;
 use DockerEngineAPI\Common\Response;
 
 class ContainersFactory extends Factory
@@ -13,7 +17,7 @@ class ContainersFactory extends Factory
      * @param int $limit Return this number of most recently created containers, including non-running ones.
      * @param bool $all Return all containers
      * @param bool $size Return the size of container as fields SizeRw and SizeRootFs.
-     * @param array $filters Filters to process on the container list, encoded as JSON (a map[string][]string).
+     * @param array|null $filters Filters to process on the container list, encoded as JSON (a map[string][]string).
      * @return Response
      * @see https://docs.docker.com/engine/api/v1.37/#operation/ContainerList
      */
@@ -98,39 +102,16 @@ class ContainersFactory extends Factory
     /**
      * Get stdout and stderr logs from a container.
      * @param string $id ID or name of the container
-     * @param bool $follow Return the logs as a stream.
-     * @param bool $stdout Return logs from stdout
-     * @param bool $stderr Return logs from stderr
-     * @param int $since Only return logs since this time, as a UNIX timestamp
-     * @param int $until Only return logs before this time, as a UNIX timestamp
-     * @param bool $timestamps Add timestamps to every log line
-     * @param string $tail Only return this number of log lines from the end of the logs. Specify as an integer or all to output all log lines.
+     * @param ContainersLogsOption $option
      * @return Response
      * @see https://docs.docker.com/engine/api/v1.37/#operation/ContainerLogs
      */
-    public function logs(
-        string $id,
-        bool $follow = false,
-        bool $stdout = false,
-        bool $stderr = false,
-        int $since = 0,
-        int $until = 0,
-        bool $timestamps = false,
-        string $tail = 'all'
-    ): Response
+    public function logs(string $id, ContainersLogsOption $option): Response
     {
         return $this->client->request(
             'GET',
             ['containers', $id, 'logs'],
-            [
-                'follow' => $follow,
-                'stdout' => $stdout,
-                'stderr' => $stderr,
-                'since' => $since,
-                'until' => $until,
-                'timestamps' => $timestamps,
-                'tail' => $tail
-            ]
+            $option->getQuery()
         );
     }
 
@@ -279,12 +260,209 @@ class ContainersFactory extends Factory
      * @return Response
      * @see https://docs.docker.com/engine/api/v1.37/#operation/ContainerUpdate
      */
-    public function update(string $id): Response
+    public function update(string $id, ContainersUpdateOption $option): Response
     {
         return $this->client->request(
             'POST',
             ['containers', $id, 'update'],
-            [],
+            $option->getBody()
+        );
+    }
+
+    /**
+     * Rename a container
+     * @param string $id ID or name of the container
+     * @param string $name New name for the container
+     * @return Response
+     * @see https://docs.docker.com/engine/api/v1.37/#operation/ContainerRename
+     */
+    public function rename(string $id, string $name): Response
+    {
+        return $this->client->request(
+            'POST',
+            ['containers', $id, 'rename'],
+            [
+                'name' => $name
+            ],
+        );
+    }
+
+    /**
+     * Use the cgroups freezer to suspend all processes in a container.
+     * @param string $id ID or name of the container
+     * @return Response
+     * @see https://docs.docker.com/engine/api/v1.37/#operation/ContainerPause
+     */
+    public function pause(string $id): Response
+    {
+        return $this->client->request(
+            'POST',
+            ['containers', $id, 'pause'],
+        );
+    }
+
+    /**
+     * Resume a container which has been paused.
+     * @param string $id ID or name of the container
+     * @return Response
+     * @see https://docs.docker.com/engine/api/v1.37/#operation/ContainerUnpause
+     */
+    public function unpause(string $id): Response
+    {
+        return $this->client->request(
+            'POST',
+            ['containers', $id, 'unpause'],
+        );
+    }
+
+    /**
+     * Attach to a container to read its output or send it input.
+     * You can attach to the same container multiple times and you can reattach to containers that have been detached.
+     * @param string $id ID or name of the container
+     * @param ContainersAttachOption $option
+     * @return Response
+     * @see https://docs.docker.com/engine/api/v1.37/#operation/ContainerAttach
+     */
+    public function attach(string $id, ContainersAttachOption $option): Response
+    {
+        return $this->client->request(
+            'POST',
+            ['containers', $id, 'attach'],
+            $option->getQuery()
+        );
+    }
+
+    /**
+     * Attach to a container via a websocket
+     * @param string $id
+     * @param ContainersAttachWsOption $option
+     * @return Response
+     * @see https://docs.docker.com/engine/api/v1.37/#operation/ContainerAttachWebsocket
+     */
+    public function attachWs(string $id, ContainersAttachWsOption $option): Response
+    {
+        return $this->client->request(
+            'GET',
+            ['containers', $id, 'attach', 'ws'],
+            $option->getQuery()
+        );
+    }
+
+    /**
+     * Block until a container stops, then returns the exit code.
+     * @param string $id ID or name of the container
+     * @param string $condition Wait until a container state reaches the given condition, either 'not-running' (default), 'next-exit', or 'removed'.
+     * @return Response
+     * @see https://docs.docker.com/engine/api/v1.37/#operation/ContainerWait
+     */
+    public function wait(string $id, string $condition = 'not-running'): Response
+    {
+        return $this->client->request(
+            'POST',
+            ['containers', $id, 'wait'],
+            [
+                'condition' => $condition
+            ]
+        );
+    }
+
+    /**
+     * Remove a container
+     * @param string $id ID or name of the container
+     * @param bool $v Remove the volumes associated with the container
+     * @param bool $force If the container is running, kill it before removing it
+     * @param bool $link Remove the specified link associated with the container
+     * @return Response
+     * @see https://docs.docker.com/engine/api/v1.37/#operation/ContainerDelete
+     */
+    public function remove(
+        string $id,
+        bool $v = false,
+        bool $force = false,
+        bool $link = false
+    ): Response
+    {
+        return $this->client->request(
+            'DELETE',
+            ['containers', $id],
+            [
+                'v' => $v,
+                'force' => $force,
+                'link' => $link
+            ]
+        );
+    }
+
+    /**
+     * A response header X-Docker-Container-Path-Stat is return containing a base64 - encoded JSON object with some filesystem header information about the path
+     * @param string $id ID or name of the container
+     * @param string $path Resource in the container’s filesystem to archive.
+     * @return Response
+     * @see https://docs.docker.com/engine/api/v1.37/#operation/ContainerArchiveInfo
+     */
+    public function archiveInfo(string $id, string $path): Response
+    {
+        return $this->client->request(
+            'HEAD',
+            ['containers', $id, 'archive'],
+            [
+                'path' => $path,
+            ]
+        );
+    }
+
+    /**
+     * Get a tar archive of a resource in the filesystem of container id.
+     * @param string $id ID or name of the container
+     * @param string $path Resource in the container’s filesystem to archive.
+     * @return Response
+     * @see https://docs.docker.com/engine/api/v1.37/#operation/ContainerArchive
+     */
+    public function archive(string $id, string $path): Response
+    {
+        return $this->client->request(
+            'GET',
+            ['containers', $id, 'archive'],
+            [
+                'path' => $path,
+            ]
+        );
+    }
+
+    /**
+     * Upload a tar archive to be extracted to a path in the filesystem of container id.
+     * @param string $id ID or name of the container
+     * @param string $path Path to a directory in the container to extract the archive’s contents into.
+     * @param string $noOverwriteDirNonDir If “1”, “true”, or “True” then it will be an error if unpacking the given content would cause an existing directory to be replaced with a non-directory and vice versa.
+     * @return Response
+     * @see https://docs.docker.com/engine/api/v1.37/#operation/PutContainerArchive
+     */
+    public function archiveUpload(string $id, string $path, string $noOverwriteDirNonDir): Response
+    {
+        return $this->client->request(
+            'PUT',
+            ['containers', $id, 'archive'],
+            [
+                'path' => $path,
+                'noOverwriteDirNonDir' => $noOverwriteDirNonDir
+            ]
+        );
+    }
+
+    /**
+     * Delete stopped containers
+     * @param array $filters Filters to process on the prune list, encoded as JSON (a map[string][]string).
+     * @return Response
+     * @see https://docs.docker.com/engine/api/v1.37/#operation/ContainerPrune
+     */
+    public function prune(array $filters): Response
+    {
+        return $this->client->request(
+            'PUT',
+            ['containers', 'prune'],
+            [
+                'filters' => json_encode($filters),
+            ]
         );
     }
 }
