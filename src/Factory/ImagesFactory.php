@@ -61,7 +61,7 @@ class ImagesFactory extends CommonFactory
      * @return Response
      * @see https://docs.docker.com/engine/api/v1.37/#operation/BuildPrune
      */
-    public function prune(): Response
+    public function buildPrune(): Response
     {
         return $this->client->request(
             'POST',
@@ -127,6 +127,88 @@ class ImagesFactory extends CommonFactory
             ['images', $name, 'push'],
             $option->getHeader(),
             $option->getQuery()
+        );
+    }
+
+    /**
+     * Tag an image so that it becomes part of a repository.
+     * @param string $name Image name or ID to tag.
+     * @param string $repo The repository to tag in
+     * @param string $tag The name of the new tag
+     * @return Response
+     * @see https://docs.docker.com/engine/api/v1.37/#operation/ImageTag
+     */
+    public function tag(string $name, string $repo, string $tag): Response
+    {
+        return $this->client->request(
+            'POST',
+            ['images', $name, 'tag'],
+            [],
+            [
+                'repo' => $repo,
+                'tag' => $tag
+            ]
+        );
+    }
+
+    /**
+     * Remove an image, along with any untagged parent images that were referenced by that image.
+     * @param string $name Image name or ID
+     * @param bool $force Remove the image even if it is being used by stopped containers or has other tags
+     * @param bool $noprune Do not delete untagged parent images
+     * @return Response
+     * @see https://docs.docker.com/engine/api/v1.37/#operation/ImageDelete
+     */
+    public function remove(string $name, bool $force = false, bool $noprune = false): Response
+    {
+        return $this->client->request(
+            'DELETE',
+            ['images', $name],
+            [],
+            [
+                'force' => $force,
+                'noprune' => $noprune
+            ]
+        );
+    }
+
+    /**
+     * Search for an image on Docker Hub.
+     * @param string $term Term to search
+     * @param int $limit Maximum number of results to return
+     * @param array $filters A JSON encoded value of the filters
+     * @return Response
+     * @see https://docs.docker.com/engine/api/v1.37/#operation/ImageSearch
+     */
+    public function search(string $term, int $limit, array $filters = []): Response
+    {
+        return $this->client->request(
+            'GET',
+            ['images', 'search'],
+            [],
+            [
+                'term' => $term,
+                'limit' => $limit,
+                'filters' => json_encode($filters)
+            ]
+        );
+    }
+
+    /**
+     * Delete unused images
+     * @param array $filters Filters to process on the prune list
+     * @return Response
+     * @see https://docs.docker.com/engine/api/v1.37/#operation/ImagePrune
+     */
+    public function imagesPrune(array $filters = []): Response
+    {
+        return $this->client->request(
+            'POST',
+            ['images', 'prune'],
+            [],
+            [
+                'filters' => json_encode($filters)
+            ]
         );
     }
 
