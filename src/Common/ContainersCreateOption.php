@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace DockerEngineAPI\Common;
 
-class ContainersCreateOption
+class ContainersCreateOption extends CommonOption
 {
-    private array $body = [
+    protected array $body = [
         'AttachStdin' => false,
         'AttachStdout' => true,
         'AttachStderr' => true,
@@ -249,13 +249,5 @@ class ContainersCreateOption
     public function setNetworkingConfig(array $value): void
     {
         $this->body['NetworkingConfig'] = $value;
-    }
-
-    /**
-     * @return array
-     */
-    public function getBody(): array
-    {
-        return $this->body;
     }
 }

@@ -5,6 +5,7 @@ namespace DockerEngineAPI\Factory;
 
 use DockerEngineAPI\Common\ImagesBuildOption;
 use DockerEngineAPI\Common\ImagesCreateOption;
+use DockerEngineAPI\Common\ImagesPushOption;
 use DockerEngineAPI\Common\Response;
 
 class ImagesFactory extends CommonFactory
@@ -79,6 +80,51 @@ class ImagesFactory extends CommonFactory
         return $this->client->request(
             'POST',
             ['images', 'create'],
+            $option->getHeader(),
+            $option->getQuery()
+        );
+    }
+
+    /**
+     * Return low-level information about an image.
+     * @param string $name Image name or id
+     * @return Response
+     * @see https://docs.docker.com/engine/api/v1.37/#operation/ImageInspect
+     */
+    public function inspect(string $name): Response
+    {
+        return $this->client->request(
+            'GET',
+            ['images', $name, 'json']
+        );
+    }
+
+    /**
+     * Return parent layers of an image.
+     * @param string $name Image name or ID
+     * @return Response
+     * @see https://docs.docker.com/engine/api/v1.37/#operation/ImageHistory
+     */
+    public function history(string $name): Response
+    {
+        return $this->client->request(
+            'GET',
+            ['images', $name, 'history']
+        );
+    }
+
+    /**
+     * Push an image to a registry.
+     * @param string $name Image name or ID
+     * @param ImagesPushOption $option
+     * @return Response
+     * @see https://docs.docker.com/engine/api/v1.37/#operation/ImagePush
+     */
+    public function push(string $name, ImagesPushOption $option): Response
+    {
+        return $this->client->request(
+            'POST',
+            ['images', $name, 'push'],
             $option->getHeader(),
             $option->getQuery()
         );

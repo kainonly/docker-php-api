@@ -3,22 +3,14 @@ declare(strict_types=1);
 
 namespace DockerEngineAPI\Common;
 
-class ImagesCreateOption
+class ImagesCreateOption extends CommonOption
 {
     use RegistryAuth;
 
-    private array $header = [];
-    private array $query = [
+    protected array $header = [];
+    protected array $query = [
         'platform' => ''
     ];
-
-    /**
-     * @return array
-     */
-    public function getHeader(): array
-    {
-        return $this->header;
-    }
 
     /**
      * Name of the image to pull
@@ -63,13 +55,5 @@ class ImagesCreateOption
     public function setPlatform(string $value): void
     {
         $this->query['platform'] = $value;
-    }
-
-    /**
-     * @return array
-     */
-    public function getQuery(): array
-    {
-        return $this->query;
     }
 }

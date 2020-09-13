@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace DockerEngineAPI\Common;
 
-class ContainersUpdateOption
+class ContainersUpdateOption extends CommonOption
 {
-    private array $body = [
+    protected array $body = [
         'Memory' => 0
     ];
 
@@ -305,13 +305,5 @@ class ContainersUpdateOption
     public function setRestartPolicy(array $value): void
     {
         $this->body['RestartPolicy'] = $value;
-    }
-
-    /**
-     * @return array
-     */
-    public function getBody(): array
-    {
-        return $this->body;
     }
 }

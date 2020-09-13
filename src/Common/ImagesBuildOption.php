@@ -3,14 +3,14 @@ declare(strict_types=1);
 
 namespace DockerEngineAPI\Common;
 
-class ImagesBuildOption
+class ImagesBuildOption extends CommonOption
 {
     use RegistryConfig;
 
-    private array $header = [
+    protected array $header = [
         'Content-type' => 'application/x-tar'
     ];
-    private array $query = [
+    protected array $query = [
         'dockerfile' => 'Dockerfile',
         'q' => false,
         'nocache' => false,
@@ -19,14 +19,6 @@ class ImagesBuildOption
         'platform' => '',
         'target' => ''
     ];
-
-    /**
-     * @return array
-     */
-    public function getHeader(): array
-    {
-        return $this->header;
-    }
 
     /**
      * Path within the build context to the Dockerfile.
@@ -233,13 +225,5 @@ class ImagesBuildOption
     public function setTarget(string $value): void
     {
         $this->query['target'] = $value;
-    }
-
-    /**
-     * @return array
-     */
-    public function getQuery(): array
-    {
-        return $this->query;
     }
 }
