@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace DockerEngineAPI\Common;
 
-class ContainersAttachWsOption
+class ContainersAttachWsOption extends CommonOption
 {
-    private array $query = [
+    protected array $query = [
         'logs' => false,
         'stream' => false,
         'stdin' => false,
@@ -66,13 +66,5 @@ class ContainersAttachWsOption
     public function setStderr(bool $value): void
     {
         $this->query['stderr'] = $value;
-    }
-
-    /**
-     * @return array
-     */
-    public function getQuery(): array
-    {
-        return $this->query;
     }
 }

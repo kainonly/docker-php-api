@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace DockerEngineAPI\Common;
 
-class ContainersLogsOption
+class ContainersLogsOption extends CommonOption
 {
-    private array $query = [
+    protected array $query = [
         'follow' => false,
         'stdout' => false,
         'stderr' => false,
@@ -77,13 +77,5 @@ class ContainersLogsOption
     public function setTail(string $value): void
     {
         $this->query['tail'] = $value;
-    }
-
-    /**
-     * @return array
-     */
-    public function getQuery(): array
-    {
-        return $this->query;
     }
 }
