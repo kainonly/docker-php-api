@@ -5,6 +5,8 @@ namespace DockerEngineAPI\Common;
 
 class ImagesBuildOption
 {
+    use RegistryConfig;
+
     private array $header = [
         'Content-type' => 'application/x-tar'
     ];
@@ -17,15 +19,6 @@ class ImagesBuildOption
         'platform' => '',
         'target' => ''
     ];
-
-    /**
-     * This is a base64-encoded JSON object with auth configurations for multiple registries that a build may refer to.
-     * @param array $value
-     */
-    public function setAuth(array $value): void
-    {
-        $this->header['X-Registry-Config'] = json_encode($value);
-    }
 
     /**
      * @return array
