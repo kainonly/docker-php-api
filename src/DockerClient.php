@@ -63,29 +63,6 @@ class DockerClient
     }
 
     /**
-     * Authentication for registries is handled client side
-     * @param string $username
-     * @param string $password
-     * @param string $email
-     * @param string $serveraddress
-     */
-    public function auth(
-        string $username,
-        string $password,
-        string $email,
-        string $serveraddress
-    ): void
-    {
-        $registryAuth = json_encode([
-            'username' => $username,
-            'password' => $password,
-            'email' => $email,
-            'serveraddress' => $serveraddress
-        ]);
-        $this->client->setHeader('X-Registry-Auth', base64_encode($registryAuth));
-    }
-
-    /**
      * @return ContainersFactory
      * @throws DependencyException
      * @throws NotFoundException

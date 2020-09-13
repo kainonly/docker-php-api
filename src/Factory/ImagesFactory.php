@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace DockerEngineAPI\Factory;
 
 use DockerEngineAPI\Common\ImagesBuildOption;
+use DockerEngineAPI\Common\ImagesCreateOption;
 use DockerEngineAPI\Common\Response;
 
 class ImagesFactory extends CommonFactory
@@ -49,6 +50,35 @@ class ImagesFactory extends CommonFactory
         return $this->client->request(
             'POST',
             ['build'],
+            $option->getHeader(),
+            $option->getQuery()
+        );
+    }
+
+    /**
+     * Delete builder cache
+     * @return Response
+     * @see https://docs.docker.com/engine/api/v1.37/#operation/BuildPrune
+     */
+    public function prune(): Response
+    {
+        return $this->client->request(
+            'POST',
+            ['build', 'prune'],
+        );
+    }
+
+    /**
+     * Create an image by either pulling it from a registry or importing it.
+     * @param ImagesCreateOption $option
+     * @return Response
+     * @see https://docs.docker.com/engine/api/v1.37/#operation/ImageCreate
+     */
+    public function create(ImagesCreateOption $option): Response
+    {
+        return $this->client->request(
+            'POST',
+            ['images', 'create'],
             $option->getHeader(),
             $option->getQuery()
         );
